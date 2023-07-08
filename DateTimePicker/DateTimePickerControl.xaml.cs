@@ -19,6 +19,7 @@ namespace DateTimePicker
         public DateTimePickerControl()
         {
             InitializeComponent();
+            DateDisplay.Text = DateTime.Now.ToString(DateFormat);
         }
 
         public DateTime? SelectedDate
@@ -34,7 +35,7 @@ namespace DateTimePicker
             }
         }
 
-        public string DateFormat
+        public string? DateFormat
         {
             get
             {

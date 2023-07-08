@@ -8,6 +8,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <dt:DateTimePickerControl Height="22" Width="120" SelectedDate="10/1/2010 1:25 PM" MaximumDate="1/1/2055" />
+        <dt:DateTimePickerControl Height="22" Width="120" />
     </Grid>
 </Window>

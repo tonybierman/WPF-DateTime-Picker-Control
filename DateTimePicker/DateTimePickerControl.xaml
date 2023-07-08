@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DateTimePicker"
              xmlns:conv="clr-namespace:DateTimePicker.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="200">
+             d:DesignHeight="22" d:DesignWidth="200">
     <UserControl.Resources>
         <ControlTemplate x:Key="IconButton" TargetType="{x:Type ToggleButton}">
             <Border>
@@ -17,27 +17,27 @@
     </UserControl.Resources>
     <StackPanel Orientation="Horizontal">
         <TextBox x:Name="DateDisplay" 
-                     VerticalContentAlignment="Center" 
-                     Margin="0,0,0,0" 
-                     PreviewMouseUp="DateDisplay_PreviewMouseUp"
-                     LostFocus="DateDisplay_LostFocus"
-                    PreviewKeyDown="DateTimePicker_PreviewKeyDown"
-                     MinHeight="{Binding ElementName=PopUpCalendarButton, Path=ActualHeight}" >2001-01-01 12:30</TextBox>
+            VerticalContentAlignment="Center" 
+            Margin="0,0,0,0" 
+            PreviewMouseUp="DateDisplay_PreviewMouseUp"
+            LostFocus="DateDisplay_LostFocus"
+            PreviewKeyDown="DateTimePicker_PreviewKeyDown"
+            MinHeight="{Binding ElementName=PopUpCalendarButton, Path=ActualHeight}">1968-10-19 07:30</TextBox>
         <ToggleButton Template="{StaticResource IconButton}" 
-                      MaxHeight="21" 
-                      Margin="-1,0,0,0" 
-                      Name="PopUpCalendarButton" 
-                      IsChecked="False"
-                      IsHitTestVisible="{Binding ElementName=CalendarPopup, Path=IsOpen, Mode=OneWay, Converter={StaticResource BoolInverterConverter}}" >
-            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE787;" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            MaxHeight="21" 
+            Margin="-1,0,0,0" 
+            Name="PopUpCalendarButton" 
+            IsChecked="False"
+            IsHitTestVisible="{Binding ElementName=CalendarPopup, Path=IsOpen, Mode=OneWay, Converter={StaticResource BoolInverterConverter}}" >
+            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE787;" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         </ToggleButton>
         <Popup IsOpen="{Binding Path=IsChecked, ElementName=PopUpCalendarButton}" 
-               x:Name="CalendarPopup" Margin="0,-7,0,0"
-               PopupAnimation="Fade"
-               StaysOpen="False">
+            x:Name="CalendarPopup" Margin="0,-7,0,0"
+            PopupAnimation="Fade"
+            StaysOpen="False">
             <Calendar Margin="0,-1,0,0"
-                      x:Name="CalDisplay"
-                      SelectedDatesChanged="CalDisplay_SelectedDatesChanged"></Calendar>
+                x:Name="CalDisplay"
+                SelectedDatesChanged="CalDisplay_SelectedDatesChanged"></Calendar>
         </Popup>
     </StackPanel>
 </UserControl>
