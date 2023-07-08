@@ -217,6 +217,7 @@ namespace DateTimePicker
             e.Handled = true;
             switch (e.Key)
             {
+                case Key.Enter:
                 case Key.Up:
                 {
                     SelectedDate = Increase(selectionStart, 1);
