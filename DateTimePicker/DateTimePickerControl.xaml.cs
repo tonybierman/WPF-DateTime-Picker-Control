@@ -7,7 +7,6 @@ namespace DateTimePicker
     /// <summary>
     /// Interaction logic for DateTimePickerControl.xaml
     /// </summary>
-
     public partial class DateTimePickerControl : UserControl
     {
         private const int FormatLengthOfLast = 2;
@@ -83,7 +82,8 @@ namespace DateTimePicker
                 RemoveHandler(DateChangedEvent, value);
             }
         }
-        void OnDateChanged(System.Object sender, System.EventArgs e)
+
+        private void OnDateChanged(System.Object sender, System.EventArgs e)
         {
         }
 
@@ -106,7 +106,7 @@ namespace DateTimePicker
             }
         }
 
-        void OnDateFormatChanged(object sender, System.Windows.RoutedEventArgs e)
+        private void OnDateFormatChanged(object sender, System.Windows.RoutedEventArgs e)
         {
             this.RaiseEvent(e);
         }
@@ -141,7 +141,7 @@ namespace DateTimePicker
                 new FrameworkPropertyMetadata(DateTime.Now, new PropertyChangedCallback(OnSelectedDateChanged),
                     new CoerceValueCallback(CoerceDate)));
 
-        static DateTime GetDateOrDefault(Object o, DateTime defaultValue)
+        private static DateTime GetDateOrDefault(Object o, DateTime defaultValue)
         {
             if (o is DateTime dt)
             {
@@ -183,7 +183,6 @@ namespace DateTimePicker
         private void DateTimePicker_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             DateTime dt = GetDateOrDefault(DateDisplay.Text, DateTime.MinValue);
-
             var selectionStart = DateDisplay.SelectionStart;
             while (dt == DateTime.MinValue)
                 DateDisplay.Undo();
@@ -192,50 +191,50 @@ namespace DateTimePicker
             switch (e.Key)
             {
                 case Key.Up:
-                    {
-                        SelectedDate = Increase(selectionStart, 1);
-                        FocusOnDatePart(selectionStart);
-                        break;
-                    }
+                {
+                    SelectedDate = Increase(selectionStart, 1);
+                    FocusOnDatePart(selectionStart);
+                    break;
+                }
 
                 case Key.Down:
-                    {
-                        SelectedDate = Increase(selectionStart, -1);
-                        FocusOnDatePart(selectionStart);
-                        break;
-                    }
+                {
+                    SelectedDate = Increase(selectionStart, -1);
+                    FocusOnDatePart(selectionStart);
+                    break;
+                }
 
                 case Key.Left:
-                    {
-                        selectionStart = SelectPreviousPosition(selectionStart);
-                        if (selectionStart > -1)
-                            FocusOnDatePart(selectionStart);
-                        else
-                            this.MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
-                        break;
-                    }
+                {
+                    selectionStart = SelectPreviousPosition(selectionStart);
+                    if (selectionStart > -1)
+                        FocusOnDatePart(selectionStart);
+                    else
+                        this.MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
+                    break;
+                }
 
                 case Key.Right:
                 case Key.Tab:
-                    {
-                        selectionStart = SelectNextPosition(selectionStart);
-                        if (selectionStart > -1)
-                            FocusOnDatePart(selectionStart);
-                        else
-                            PopUpCalendarButton.Focus();
-                        break;
-                    }
+                {
+                    selectionStart = SelectNextPosition(selectionStart);
+                    if (selectionStart > -1)
+                        FocusOnDatePart(selectionStart);
+                    else
+                        PopUpCalendarButton.Focus();
+                    break;
+                }
 
                 default:
+                {
+                    if (!char.IsDigit(System.Convert.ToChar(e.KeyboardDevice.ToString)))
                     {
-                        if (!char.IsDigit(System.Convert.ToChar(e.KeyboardDevice.ToString)))
-                        {
-                            if (e.Key == Key.D0 || e.Key == Key.D1 || e.Key == Key.D2 || e.Key == Key.D3 || e.Key == Key.D4 || e.Key == Key.D5 || e.Key == Key.D6 || e.Key == Key.D7 || e.Key == Key.D8 || e.Key == Key.D9)
-                                e.Handled = false;
-                        }
-
-                        break;
+                        if (e.Key == Key.D0 || e.Key == Key.D1 || e.Key == Key.D2 || e.Key == Key.D3 || e.Key == Key.D4 || e.Key == Key.D5 || e.Key == Key.D6 || e.Key == Key.D7 || e.Key == Key.D8 || e.Key == Key.D9)
+                            e.Handled = false;
                     }
+
+                    break;
+                }
             }
         }
 
@@ -318,18 +317,18 @@ namespace DateTimePicker
             return true;
         }
 
-        private int SelectNextPosition(int selstart)
+        private int SelectNextPosition(int selectionStart)
         {
-            return SelectPosition(selstart, Direction.Next);
+            return SelectPosition(selectionStart, Direction.Next);
         }
 
-        private int SelectPreviousPosition(int selstart)
+        private int SelectPreviousPosition(int selectionStart)
         {
-            return SelectPosition(selstart, Direction.Previous);
+            return SelectPosition(selectionStart, Direction.Previous);
         }
 
         // Selects next or previous date value, depending on the incrementor value  
-        // Alternatively moves focus to previous control or the calender button
+        // Alternatively moves focus to previous control or the calendar button
         private int SelectPosition(int selectionStart, Direction direction)
         {
             int returnValue = 0;
