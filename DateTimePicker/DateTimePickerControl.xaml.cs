@@ -139,8 +139,22 @@ namespace DateTimePicker
             DependencyProperty.Register("SelectedDate",
                 typeof(Nullable<DateTime>),
                 typeof(DateTimePickerControl),
-                new FrameworkPropertyMetadata(DateTime.Now, new PropertyChangedCallback(OnSelectedDateChanged),
+                new FrameworkPropertyMetadata(
+                    DateTime.Now,
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+                    new PropertyChangedCallback(OnSelectedDateChanged),
                     new CoerceValueCallback(CoerceDate)));
+
+        //public static readonly DependencyProperty TextProperty = 
+        //    DependencyProperty.Register("Text",
+        //    typeof(string),
+        //    typeof(DateTimeTextBoxUserControl),
+        //    new FrameworkPropertyMetadata(
+        //        default(string),
+        //        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
+        //        new PropertyChangedCallback(OnTextChangedCallBack)
+        //    )
+        //);
 
         private static DateTime GetDateOrDefault(Object o, DateTime defaultValue)
         {
