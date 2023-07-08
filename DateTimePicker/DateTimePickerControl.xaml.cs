@@ -22,6 +22,18 @@ namespace DateTimePicker
             DateDisplay.Text = DateTime.Now.ToString(DateFormat);
         }
 
+        public static readonly DependencyProperty ButtonStyleProperty =
+            DependencyProperty.Register("ButtonStyle", 
+                typeof(Style), 
+                typeof(DateTimePickerControl), 
+                new PropertyMetadata(null));
+
+        public Style ButtonStyle
+        {
+            get { return (Style)GetValue(ButtonStyleProperty); }
+            set { SetValue(ButtonStyleProperty, value); }
+        }
+
         public DateTime? SelectedDate
         {
             get

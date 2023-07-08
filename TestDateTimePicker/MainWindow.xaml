@@ -4,10 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TestDateTimePicker"
-        xmlns:dt="clr-namespace:DateTimePicker;assembly=DateTimePicker"
+        xmlns:dtp="clr-namespace:DateTimePicker;assembly=DateTimePicker"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <sys:String x:Key="DefaultDateFormat">yyyy-MM-dd HH:mm</sys:String>
+        <LinearGradientBrush x:Key="ThemeBrushBlue"  EndPoint="0.501,0.039" StartPoint="0.501,0.971">
+            <GradientStop Color="#2055DA" Offset="0" />
+            <GradientStop Color="#1944ae" Offset="1" />
+        </LinearGradientBrush>
+        <Style x:Key="DateTimePickerStyle" TargetType="{x:Type dtp:DateTimePickerControl}">
+            <Setter Property="MaxWidth" Value="160"/>
+            <Setter Property="Height" Value="21"/>
+        </Style>
+        <Style x:Key="DateTimePickerButtonStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="{DynamicResource ThemeBrushBlue}"/>
+            <Setter Property="Width" Value="22"/>
+            <Setter Property="Height" Value="21"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="0,2,0,0"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <dt:DateTimePickerControl Height="22" Width="120" />
+        <dtp:DateTimePickerControl 
+            DateFormat="{StaticResource DefaultDateFormat}"
+            ButtonStyle="{StaticResource DateTimePickerButtonStyle}" 
+            Style="{StaticResource DateTimePickerStyle}"/>
     </Grid>
 </Window>
