@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DateTimePicker"
              xmlns:conv="clr-namespace:DateTimePicker.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="22" d:DesignWidth="132">
+             d:DesignHeight="22" d:DesignWidth="115">
     <UserControl.Resources>
         <ControlTemplate x:Key="IconButton" TargetType="{x:Type ToggleButton}">
             <Border>
@@ -37,8 +37,8 @@
             PopupAnimation="Fade"
             StaysOpen="False">
             <Calendar Margin="0,-1,0,0"
-                x:Name="CalDisplay"
-                SelectedDatesChanged="CalDisplay_SelectedDatesChanged"></Calendar>
+                x:Name="CalendarDisplay"
+                SelectedDatesChanged="CalendarDisplay_SelectedDatesChanged"></Calendar>
         </Popup>
     </StackPanel>
 </UserControl>

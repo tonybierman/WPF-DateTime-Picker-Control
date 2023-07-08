@@ -158,10 +158,10 @@ namespace DateTimePicker
             }
         }
 
-        private void CalDisplay_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CalendarDisplay_SelectedDatesChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             PopUpCalendarButton.IsChecked = false;
-            SelectedDate = CalDisplay.SelectedDate!.Value;
+            SelectedDate = CalendarDisplay.SelectedDate!.Value;
         }
 
         private void DateDisplay_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -247,6 +247,7 @@ namespace DateTimePicker
                 current = dtp.MinimumDate;
             if (current > dtp.MaximumDate)
                 current = dtp.MaximumDate;
+
             return current;
         }
 
@@ -258,6 +259,7 @@ namespace DateTimePicker
                 throw new ArgumentException("MinimumDate can not be equal to, or more than maximum date");
             if (current > dtp.SelectedDate)
                 dtp.SelectedDate = current;
+
             return current;
         }
 
@@ -269,6 +271,7 @@ namespace DateTimePicker
                 throw new ArgumentException("MaximumDate can not be equal to, or less than MinimumDate");
             if (current < dtp.SelectedDate)
                 dtp.SelectedDate = current;
+
             return current;
         }
 
@@ -290,8 +293,8 @@ namespace DateTimePicker
             {
                 DateTime dt = (DateTime)args.NewValue;
                 dtp.DateDisplay.Text = dt.ToString(dtp.DateFormat);
-                dtp.CalDisplay.SelectedDate = dt;
-                dtp.CalDisplay.DisplayDate = dt;
+                dtp.CalendarDisplay.SelectedDate = dt;
+                dtp.CalendarDisplay.DisplayDate = dt;
             }
         }
 
