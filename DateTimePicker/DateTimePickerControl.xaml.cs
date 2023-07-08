@@ -34,6 +34,18 @@ namespace DateTimePicker
             set { SetValue(ButtonStyleProperty, value); }
         }
 
+        public static readonly DependencyProperty TextBoxStyleProperty =
+            DependencyProperty.Register("TextBoxStyle",
+                typeof(Style),
+                typeof(DateTimePickerControl),
+                new PropertyMetadata(null));
+
+        public Style TextBoxStyle
+        {
+            get { return (Style)GetValue(TextBoxStyleProperty); }
+            set { SetValue(TextBoxStyleProperty, value); }
+        }
+
         public DateTime? SelectedDate
         {
             get

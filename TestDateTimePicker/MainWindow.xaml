@@ -18,6 +18,9 @@
             <Setter Property="MaxWidth" Value="160"/>
             <Setter Property="Height" Value="21"/>
         </Style>
+        <Style x:Key="DateTimePickerTextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Width" Value="110"/>
+        </Style>
         <Style x:Key="DateTimePickerButtonStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="{DynamicResource ThemeBrushBlue}"/>
@@ -32,6 +35,7 @@
     <Grid>
         <dtp:DateTimePickerControl 
             DateFormat="{StaticResource DefaultDateFormat}"
+            TextBoxStyle="{StaticResource DateTimePickerTextBoxStyle}"
             ButtonStyle="{StaticResource DateTimePickerButtonStyle}" 
             Style="{StaticResource DateTimePickerStyle}"/>
     </Grid>

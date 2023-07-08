@@ -20,6 +20,7 @@
         <TextBox x:Name="DateDisplay" 
             VerticalContentAlignment="Center" 
             Margin="0,0,1,0" 
+            Style="{Binding ElementName=parent, Path=TextBoxStyle}"
             PreviewMouseUp="DateDisplay_PreviewMouseUp"
             LostFocus="DateDisplay_LostFocus"
             PreviewKeyDown="DateTimePicker_PreviewKeyDown"
