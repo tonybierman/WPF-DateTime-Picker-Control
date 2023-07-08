@@ -46,6 +46,30 @@ namespace DateTimePicker
             set { SetValue(TextBoxStyleProperty, value); }
         }
 
+        public static readonly DependencyProperty PopUpStyleProperty =
+            DependencyProperty.Register("PopUpStyle",
+                typeof(Style),
+                typeof(DateTimePickerControl),
+                new PropertyMetadata(null));
+
+        public Style PopUpStyle
+        {
+            get { return (Style)GetValue(PopUpStyleProperty); }
+            set { SetValue(PopUpStyleProperty, value); }
+        }
+
+        public static readonly DependencyProperty CalendarStyleProperty =
+            DependencyProperty.Register("CalendarStyle",
+                typeof(Style),
+                typeof(DateTimePickerControl),
+                new PropertyMetadata(null));
+
+        public Style CalendarStyle
+        {
+            get { return (Style)GetValue(CalendarStyleProperty); }
+            set { SetValue(CalendarStyleProperty, value); }
+        }
+
         public DateTime? SelectedDate
         {
             get
@@ -168,17 +192,6 @@ namespace DateTimePicker
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                     new PropertyChangedCallback(OnSelectedDateChanged),
                     new CoerceValueCallback(CoerceDate)));
-
-        //public static readonly DependencyProperty TextProperty = 
-        //    DependencyProperty.Register("Text",
-        //    typeof(string),
-        //    typeof(DateTimeTextBoxUserControl),
-        //    new FrameworkPropertyMetadata(
-        //        default(string),
-        //        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
-        //        new PropertyChangedCallback(OnTextChangedCallBack)
-        //    )
-        //);
 
         private static DateTime GetDateOrDefault(Object o, DateTime defaultValue)
         {

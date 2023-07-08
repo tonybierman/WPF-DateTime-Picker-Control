@@ -31,11 +31,15 @@
             IsHitTestVisible="{Binding ElementName=CalendarPopup, Path=IsOpen, Mode=OneWay, Converter={StaticResource BoolInverterConverter}}" >
             <TextBlock Style="{Binding ElementName=parent, Path=ButtonStyle}" FontFamily="Segoe MDL2 Assets" Text="&#xE787;"  />
         </ToggleButton>
-        <Popup IsOpen="{Binding Path=IsChecked, ElementName=PopUpCalendarButton}" 
+        <Popup
+            Style="{Binding ElementName=parent, Path=PopUpStyle}"
+            IsOpen="{Binding Path=IsChecked, ElementName=PopUpCalendarButton}" 
             x:Name="CalendarPopup" Margin="0,-7,0,0"
             PopupAnimation="Fade"
             StaysOpen="False">
-            <Calendar Margin="0,-1,0,0"
+            <Calendar
+                Style="{Binding ElementName=parent, Path=CalendarStyle}"
+                Margin="0,-1,0,0"
                 x:Name="CalendarDisplay"
                 SelectedDatesChanged="CalendarDisplay_SelectedDatesChanged"></Calendar>
         </Popup>
