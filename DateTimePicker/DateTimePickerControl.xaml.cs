@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -6,7 +5,7 @@ using System.Windows.Input;
 namespace DateTimePicker
 {
     /// <summary>
-    /// Interaction logic for UserControl1.xaml
+    /// Interaction logic for DateTimePickerControl.xaml
     /// </summary>
 
     public partial class DateTimePickerControl : UserControl
@@ -20,12 +19,10 @@ namespace DateTimePicker
 
         public DateTimePickerControl()
         {
-
-            // This call is required by the designer.
             InitializeComponent();
         }
 
-        public Nullable<DateTime> SelectedDate
+        public DateTime? SelectedDate
         {
             get
             {
@@ -168,8 +165,8 @@ namespace DateTimePicker
 
         private void DateDisplay_PreviewMouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var selstart = DateDisplay.SelectionStart;
-            FocusOnDatePart(selstart);
+            var selectionStart = DateDisplay.SelectionStart;
+            FocusOnDatePart(selectionStart);
         }
 
         private void DateDisplay_LostFocus(object sender, System.Windows.RoutedEventArgs e)
@@ -187,7 +184,7 @@ namespace DateTimePicker
         {
             DateTime dt = GetDateOrDefault(DateDisplay.Text, DateTime.MinValue);
 
-            var selstart = DateDisplay.SelectionStart;
+            var selectionStart = DateDisplay.SelectionStart;
             while (dt == DateTime.MinValue)
                 DateDisplay.Undo();
 
@@ -196,23 +193,23 @@ namespace DateTimePicker
             {
                 case Key.Up:
                     {
-                        SelectedDate = Increase(selstart, 1);
-                        FocusOnDatePart(selstart);
+                        SelectedDate = Increase(selectionStart, 1);
+                        FocusOnDatePart(selectionStart);
                         break;
                     }
 
                 case Key.Down:
                     {
-                        SelectedDate = Increase(selstart, -1);
-                        FocusOnDatePart(selstart);
+                        SelectedDate = Increase(selectionStart, -1);
+                        FocusOnDatePart(selectionStart);
                         break;
                     }
 
                 case Key.Left:
                     {
-                        selstart = SelectPreviousPosition(selstart);
-                        if (selstart > -1)
-                            FocusOnDatePart(selstart);
+                        selectionStart = SelectPreviousPosition(selectionStart);
+                        if (selectionStart > -1)
+                            FocusOnDatePart(selectionStart);
                         else
                             this.MoveFocus(new TraversalRequest(FocusNavigationDirection.Previous));
                         break;
@@ -221,9 +218,9 @@ namespace DateTimePicker
                 case Key.Right:
                 case Key.Tab:
                     {
-                        selstart = SelectNextPosition(selstart);
-                        if (selstart > -1)
-                            FocusOnDatePart(selstart);
+                        selectionStart = SelectNextPosition(selectionStart);
+                        if (selectionStart > -1)
+                            FocusOnDatePart(selectionStart);
                         else
                             PopUpCalendarButton.Focus();
                         break;
@@ -244,54 +241,50 @@ namespace DateTimePicker
 
         private static object CoerceDate(DependencyObject d, object value)
         {
-            DateTimePickerControl dtpicker = (DateTimePickerControl)d;
+            DateTimePickerControl dtp = (DateTimePickerControl)d;
             DateTime current = (DateTime)value;
-            if (current < dtpicker.MinimumDate)
-                current = dtpicker.MinimumDate;
-            if (current > dtpicker.MaximumDate)
-                current = dtpicker.MaximumDate;
+            if (current < dtp.MinimumDate)
+                current = dtp.MinimumDate;
+            if (current > dtp.MaximumDate)
+                current = dtp.MaximumDate;
             return current;
         }
 
         private static object CoerceMinDate(DependencyObject d, object value)
         {
-            DateTimePickerControl dtpicker = (DateTimePickerControl)d;
+            DateTimePickerControl dtp = (DateTimePickerControl)d;
             DateTime current = (DateTime)value;
-            if (current >= dtpicker.MaximumDate)
+            if (current >= dtp.MaximumDate)
                 throw new ArgumentException("MinimumDate can not be equal to, or more than maximum date");
-            if (current > dtpicker.SelectedDate)
-                dtpicker.SelectedDate = current;
+            if (current > dtp.SelectedDate)
+                dtp.SelectedDate = current;
             return current;
         }
 
         private static object CoerceMaxDate(DependencyObject d, object value)
         {
-            DateTimePickerControl dtpicker = (DateTimePickerControl)d;
+            DateTimePickerControl dtp = (DateTimePickerControl)d;
             DateTime current = (DateTime)value;
-            if (current <= dtpicker.MinimumDate)
-                throw new ArgumentException("MaximimumDate can not be equal to, or less than MinimumDate");
-            if (current < dtpicker.SelectedDate)
-                dtpicker.SelectedDate = current;
+            if (current <= dtp.MinimumDate)
+                throw new ArgumentException("MaximumDate can not be equal to, or less than MinimumDate");
+            if (current < dtp.SelectedDate)
+                dtp.SelectedDate = current;
             return current;
         }
 
         public static void OnDateFormatChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var dtp = (DateTimePickerControl)obj;
-
-            //TODO: VB
-            dtp.DateDisplay.Text = Strings.Format(dtp.SelectedDate, dtp.DateFormat);
+            dtp.DateDisplay.Text = string.Format(dtp.DateFormat, dtp.SelectedDate);
         }
 
         public static void OnSelectedDateChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var dtp = (DateTimePickerControl)obj;
-
             if (args.NewValue == null)
             {
                 dtp.SelectedDate = (DateTime?)args.NewValue;
-
-                dtp.DateDisplay.Text = "datum ej satt...";
+                dtp.DateDisplay.Text = "Date not set";
             }
             else
             {
@@ -337,99 +330,100 @@ namespace DateTimePicker
 
         // Selects next or previous date value, depending on the incrementor value  
         // Alternatively moves focus to previous control or the calender button
-        private int SelectPosition(int selstart, Direction direction)
+        private int SelectPosition(int selectionStart, Direction direction)
         {
-            int retval = 0;
+            int returnValue = 0;
 
-            if ((selstart > 0 || direction == DateTimePickerControl.Direction.Next) && (selstart < DateFormat.Length - FormatLengthOfLast || direction == DateTimePickerControl.Direction.Previous))
+            if ((selectionStart > 0 || direction == DateTimePickerControl.Direction.Next) && (selectionStart < DateFormat.Length - FormatLengthOfLast || direction == DateTimePickerControl.Direction.Previous))
             {
-                char firstchar = System.Convert.ToChar(DateFormat.Substring(selstart, 1));
-                char nextchar = System.Convert.ToChar(DateFormat.Substring(selstart + (int)direction, 1));
+                char firstCharacter = System.Convert.ToChar(DateFormat.Substring(selectionStart, 1));
+                char nextCharacter = System.Convert.ToChar(DateFormat.Substring(selectionStart + (int)direction, 1));
                 bool found = false;
 
-                while (((nextchar == firstchar || !char.IsLetter(nextchar)) && (selstart > 1 || direction > 0) && (selstart < DateFormat.Length - 2 || direction == DateTimePickerControl.Direction.Previous)))
+                while (((nextCharacter == firstCharacter || !char.IsLetter(nextCharacter)) && (selectionStart > 1 || direction > 0) && (selectionStart < DateFormat.Length - 2 || direction == DateTimePickerControl.Direction.Previous)))
                 {
-                    selstart += (int)direction;
-                    nextchar = System.Convert.ToChar(DateFormat.Substring(selstart + (int)direction, 1));
+                    selectionStart += (int)direction;
+                    nextCharacter = System.Convert.ToChar(DateFormat.Substring(selectionStart + (int)direction, 1));
                 }
 
-                if (selstart > 1)
+                if (selectionStart > 1)
                     found = true;
-                selstart = DateFormat.IndexOf(nextchar);
+                selectionStart = DateFormat.IndexOf(nextCharacter);
 
                 if (found)
-                    retval = selstart;
+                    returnValue = selectionStart;
             }
             else
-                retval = -1;
+                returnValue = -1;
 
-            return retval;
+            return returnValue;
         }
 
-        private void FocusOnDatePart(int selstart)
+        private void FocusOnDatePart(int selectionStart)
         {
-            if (selstart > DateFormat.Length - 1)
-                selstart = DateFormat.Length - 1;
-            char firstchar = System.Convert.ToChar(DateFormat.Substring(selstart, 1));
+            if (selectionStart > DateFormat.Length - 1)
+                selectionStart = DateFormat.Length - 1;
+            char firstCharacter = System.Convert.ToChar(DateFormat.Substring(selectionStart, 1));
 
-            selstart = DateFormat.IndexOf(firstchar);
-            int sellength = Math.Abs((selstart - (DateFormat.LastIndexOf(firstchar) + 1)));
+            selectionStart = DateFormat.IndexOf(firstCharacter);
+            int selectionLength = Math.Abs((selectionStart - (DateFormat.LastIndexOf(firstCharacter) + 1)));
             DateDisplay.Focus();
-            DateDisplay.Select(selstart, sellength);
+            DateDisplay.Select(selectionStart, selectionLength);
         }
 
-        private DateTime Increase(int selstart, int value)
+        private DateTime Increase(int selectionStart, int value)
         {
-            DateTime retval = DateTime.MinValue;
-            DateTime.TryParse(DateDisplay.Text, out retval);
+            DateTime returnValue = DateTime.MinValue;
+            DateTime.TryParse(DateDisplay.Text, out returnValue);
 
             try
             {
-                switch (DateFormat.Substring(selstart, 1))
+                switch (DateFormat.Substring(selectionStart, 1))
                 {
                     case "h":
                     case "H":
                         {
-                            retval = retval.AddHours(value);
+                            returnValue = returnValue.AddHours(value);
                             break;
                         }
 
                     case "y":
                         {
-                            retval = retval.AddYears(value);
+                            returnValue = returnValue.AddYears(value);
                             break;
                         }
 
                     case "M":
                         {
-                            retval = retval.AddMonths(value);
+                            returnValue = returnValue.AddMonths(value);
                             break;
                         }
 
                     case "m":
                         {
-                            retval = retval.AddMinutes(value);
+                            returnValue = returnValue.AddMinutes(value);
                             break;
                         }
 
                     case "d":
                         {
-                            retval = retval.AddDays(value);
+                            returnValue = returnValue.AddDays(value);
                             break;
                         }
 
                     case "s":
                         {
-                            retval = retval.AddSeconds(value);
+                            returnValue = returnValue.AddSeconds(value);
                             break;
                         }
                 }
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
+                throw;
             }
 
-            return retval;
+            return returnValue;
         }
     }
 }
