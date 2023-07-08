@@ -242,7 +242,7 @@ namespace DateTimePicker
         private static object CoerceDate(DependencyObject d, object value)
         {
             DateTimePickerControl dtp = (DateTimePickerControl)d;
-            DateTime current = (DateTime)value;
+            DateTime current = value is DateTime ? (DateTime)value : DateTime.Now;
             if (current < dtp.MinimumDate)
                 current = dtp.MinimumDate;
             if (current > dtp.MaximumDate)
