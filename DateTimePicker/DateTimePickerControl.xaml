@@ -41,7 +41,8 @@
                 Style="{Binding ElementName=parent, Path=CalendarStyle}"
                 Margin="0,-1,0,0"
                 x:Name="CalendarDisplay"
-                SelectedDatesChanged="CalendarDisplay_SelectedDatesChanged"></Calendar>
+                SelectedDatesChanged="CalendarDisplay_SelectedDatesChanged">
+            </Calendar>
         </Popup>
     </StackPanel>
 </UserControl>
