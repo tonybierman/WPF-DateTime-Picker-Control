@@ -7,7 +7,7 @@
         xmlns:dtp="clr-namespace:DateTimePicker;assembly=DateTimePicker"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DateTime Picker Demo" Height="360" Width="540">
     <Window.Resources>
         <sys:String x:Key="DefaultDateFormat">yyyy-MM-dd HH:mm</sys:String>
         <LinearGradientBrush x:Key="ThemeBrushBlue"  EndPoint="0.501,0.039" StartPoint="0.501,0.971">
@@ -37,6 +37,7 @@
             DateFormat="{StaticResource DefaultDateFormat}"
             TextBoxStyle="{StaticResource DateTimePickerTextBoxStyle}"
             ButtonStyle="{StaticResource DateTimePickerButtonStyle}" 
-            Style="{StaticResource DateTimePickerStyle}"/>
+            Style="{StaticResource DateTimePickerStyle}" 
+            CalendarStyle="{StaticResource CalendarStyleOne}"/>
     </Grid>
 </Window>

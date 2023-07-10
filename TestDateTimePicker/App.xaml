@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:TestDateTimePicker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DateTimePicker;component/Resources/DateTimePickerTheme.xaml"/>
+                <ResourceDictionary Source="/DateTimePicker;component/Resources/DateTimePickerStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
